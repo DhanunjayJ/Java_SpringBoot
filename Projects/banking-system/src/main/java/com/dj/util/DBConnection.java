@@ -3,6 +3,7 @@ package com.dj.util;
 import java.sql.*;
 
 public class DBConnection{
+    
     private static Connection connection = null;
 
     private DBConnection(){}

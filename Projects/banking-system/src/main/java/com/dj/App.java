@@ -1,6 +1,7 @@
 package com.dj;
 
 import com.dj.util.DBConnection;
+import com.dj.util.DBInitializer;
 
 /**
  * Hello world!
@@ -15,5 +16,8 @@ public class App
         }else{
             System.out.println("DataBase connection failed");
         }
+
+        DBInitializer.init();
+        System.out.println("Application is running");
     }
 }
