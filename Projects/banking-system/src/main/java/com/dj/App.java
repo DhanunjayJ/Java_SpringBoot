@@ -1,12 +1,9 @@
 package com.dj;
 
+import com.dj.ui.ConsoleMenu;
 import com.dj.util.DBConnection;
 import com.dj.util.DBInitializer;
 
-/**
- * Hello world!
- *
- */
 public class App 
 {
     public static void main( String[] args )
@@ -18,6 +15,8 @@ public class App
         }
 
         DBInitializer.init();
-        System.out.println("Application is running");
+        
+        ConsoleMenu menu = new ConsoleMenu();
+        menu.start();
     }
 }
