@@ -6,7 +6,7 @@ import com.dj.util.DBInitializer;
 
 public class App 
 {
-    public static void main( String[] args )
+    public static void main(String[] args )
     {
         if(DBConnection.getConnection()!=null){
             System.out.println("DataBase skeleton is ready");

@@ -8,8 +8,8 @@ import java.sql.ResultSet;
 public class DBInitializer {
 
     public static void init() {
-        try (Connection conn = DBConnection.getConnection();
-             Statement stmt = conn.createStatement()) {
+        Connection conn = DBConnection.getConnection();
+        try (Statement stmt = conn.createStatement()) {
             
             // 1. Check if 'users' table already exists
             DatabaseMetaData dbm = conn.getMetaData();
