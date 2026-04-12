@@ -1,15 +1,19 @@
 package com.dj.ui;
 import java.util.Scanner;
 
+import com.dj.exception.InsufficientFundsException;
 import com.dj.model.BankAccount;
 import com.dj.model.CurrentAccount;
 import com.dj.model.SavingsAccount;
 import com.dj.model.User;
 import com.dj.repository.AccountRepository;
 import com.dj.repository.UserRepository;
+import com.dj.service.BankingService;
 
 public class ConsoleMenu {
     private Scanner scanner;
+
+    BankingService bankingService = new BankingService();
 
     public ConsoleMenu(){
         this.scanner = new Scanner(System.in);
@@ -28,16 +32,13 @@ public class ConsoleMenu {
 
             String choice = scanner.nextLine();
 
-            UserRepository userRepo = new UserRepository();
-
             switch (choice) {
                 case "1":{
                     System.out.println("Enter usename :");
                     String username = scanner.nextLine();
                     System.out.println("Enter password :");
                     String password = scanner.nextLine();
-                    User user = new User(username,password);
-                    boolean isRegistered = userRepo.register(user);
+                    boolean isRegistered = bankingService.registerUser(username, password);
                     if(isRegistered){
                         System.out.println("User Succesfully Registered");
                     }else{
@@ -50,7 +51,7 @@ public class ConsoleMenu {
                     String username = scanner.nextLine();
                     System.out.println("Enter password :");
                     String password = scanner.nextLine();
-                    User user = userRepo.login(username, password);
+                    User user = bankingService.login(username, password);
                     if(user!=null){
                     System.out.println("SucessFully Logged in!! Welcome, "+ user.getUsername());
                     handleBankingMenu(user);
@@ -70,13 +71,12 @@ public class ConsoleMenu {
     }
 
     private void handleBankingMenu(User user) {
-       AccountRepository accountRepo = new AccountRepository();
 
        boolean loggedIn = true;
 
        while(loggedIn){
 
-        BankAccount account = accountRepo.getAccountByUserId(user.getId());
+        BankAccount account = bankingService.getAccountByUserId(user.getId());
 
         if(account == null) {
             System.out.println("\n You don't have an account yet");
@@ -87,17 +87,17 @@ public class ConsoleMenu {
             String choice = scanner.nextLine();
 
             if(choice.equals("1")){
-                boolean isCreated = accountRepo.createAccount(new SavingsAccount(user.getId(),0.0));
+                boolean isCreated = bankingService.createAccount(new SavingsAccount(user.getId(),0.0));
                 if(isCreated)
                 System.out.println("Savings Account Created");
                 else System.out.println("Not Created");
 
             }else if(choice.equals("2")){
-                boolean isCreated = accountRepo.createAccount(new CurrentAccount(user.getId(),0.0));
+                boolean isCreated = bankingService.createAccount(new CurrentAccount(user.getId(),0.0));
                 if(isCreated)
                 System.out.println("Current Account Created");
                 else System.out.println("Not Created");
-                
+
             }else{
                 loggedIn = false;
             }
@@ -105,6 +105,7 @@ public class ConsoleMenu {
         {
             // 2. If account exists, show the Transaction Menu
             System.out.println("\n--- " + account.getAccountType() + " ACCOUNT MENU ---");
+            System.out.println("Your Account Id is:"+ account.getId());
             System.out.println("Balance: " + account.getBalance());
             System.out.println("1. Deposit");
             System.out.println("2. Withdraw");
@@ -114,12 +115,50 @@ public class ConsoleMenu {
 
             String choice = scanner.nextLine();
             switch (choice) {
-                case "1":
-                    System.out.println("Deposit logic (Phase 3)");
+                case "1":{
+                    System.out.println("Enter the Amount you want to deposit:");
+                    try{
+                   // This is safer than scanner.nextDouble()
+                    Double amount = Double.parseDouble(scanner.nextLine());
+                    bankingService.deposit(account, amount);
+                    System.out.println("Amount successfully deposited to the account id: " + account.getId());
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
                     break;
+                }
                 case "2":
-                    System.out.println("Withdraw logic (Phase 3)");
-                    break;
+                    {
+                        System.out.println("Enter the Amount to withdraw:");
+                        try{
+                            Double amount = Double.parseDouble(scanner.nextLine());
+                            bankingService.withdraw(account, amount);
+
+                            System.out.println("Processing your request...");
+                            Thread.sleep(1000);
+                            System.out.println("\n [ATM] Verifying balance and counting note....");
+                            Thread.sleep(1500);
+                            System.out.println("[ATM] Counting: 10%... 40%... 80%... 100%...");
+                            Thread.sleep(1000);
+
+                            System.out.println("\n *******************************************************");
+                            System.out.println(" KR-CHHH........ CHHH...... [Money sounds]    ");
+                            Thread.sleep(1000);
+                            System.out.println(" Your cash is comming out of the slot!!");
+                            Thread.sleep(1000);
+                            System.out.println(" TAKE IT!! Don't get Distracted!");
+                            System.out.println("***********************************************************");
+                        }catch(InsufficientFundsException e){
+                            System.err.println("Transaction Declined: "+ e.getMessage());
+                        }catch (NumberFormatException e){
+                            System.out.println("Please enter a valid numeric amount.");
+                        }catch (InterruptedException e){
+                            System.out.println("System Error:" + e.getMessage());
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        break;
+                    }
                 case "3":
                     System.out.println("Transfer logic (Phase 3)");
                     break;

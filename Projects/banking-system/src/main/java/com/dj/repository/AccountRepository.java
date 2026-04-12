@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.spi.CurrencyNameProvider;
 
 import com.dj.model.BankAccount;
 import com.dj.model.SavingsAccount;
@@ -48,4 +47,12 @@ public class AccountRepository {
         }
     }
 
+    public boolean updateBalance(int accountId,double newBalance,Connection conn) throws SQLException{
+        String sql = "UPDATE accounts SET balance = ? WHERE id = ?";
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setDouble(1, newBalance);
+            pstmt.setInt(2,accountId);
+            return pstmt.executeUpdate() > 0;
+        }
+    }
 }
