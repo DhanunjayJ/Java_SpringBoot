@@ -98,4 +98,44 @@ public class BankingService {
 
         }
     }
+
+    public void tansfer(BankAccount senderAccount,String receiverUsername,double amount) throws Exception{
+        if(amount<=0) throw new Exception ("Transfer amount must be positive");
+
+        if(senderAccount.getBalance()<amount) throw new InsufficientFundsException("Insufficient funds for transfer");
+
+        //find the reciver
+        User receiverUser = userRepository.getUserByUsername(receiverUsername);
+        if(receiverUser == null) throw new Exception("Reciver user not found");
+
+        // get Reciver Account
+        BankAccount receiverAccount = accountRepo.getAccountByUserId(receiverUser.getId());
+        if(receiverAccount == null) throw new Exception ("Receiver does not have an active bank account");
+
+        Connection conn = DBConnection.getConnection();
+
+        try{
+            conn.setAutoCommit(false);
+
+            //deduct from sender
+            double newSenderBalance = senderAccount.getBalance()-amount;
+            accountRepo.updateBalance(senderAccount.getId(), newSenderBalance, conn);
+
+            transRepo.logTransaction(new Transaction(senderAccount.getId(), amount, "TRANSFER_OUT"), conn);
+
+            //Add to receiver
+            double newReceiverBalance = receiverAccount.getBalance()+amount;
+            accountRepo.updateBalance(receiverAccount.getId(), newReceiverBalance, conn);
+
+            transRepo.logTransaction(new Transaction(receiverAccount.getId(), amount, "TRANSFTER_IN"),conn);
+            conn.commit();
+            senderAccount.setBalance(newSenderBalance);
+            System.out.println("Transfer Successful!!");
+        }catch(SQLException e){
+            conn.rollback();
+            throw new Exception("Transfer failed: Database Error");
+        }finally{
+            conn.setAutoCommit(true);
+        }
+    }
 }

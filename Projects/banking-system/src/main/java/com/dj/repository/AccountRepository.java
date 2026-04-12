@@ -41,7 +41,7 @@ public class AccountRepository {
                 }
             }
         return null;
-        }catch (SQLException e){
+        } catch (SQLException e){
             e.printStackTrace();
             return null;
         }

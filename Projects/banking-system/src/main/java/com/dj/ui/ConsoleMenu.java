@@ -6,8 +6,6 @@ import com.dj.model.BankAccount;
 import com.dj.model.CurrentAccount;
 import com.dj.model.SavingsAccount;
 import com.dj.model.User;
-import com.dj.repository.AccountRepository;
-import com.dj.repository.UserRepository;
 import com.dj.service.BankingService;
 
 public class ConsoleMenu {
@@ -34,7 +32,7 @@ public class ConsoleMenu {
 
             switch (choice) {
                 case "1":{
-                    System.out.println("Enter usename :");
+                    System.out.println("Enter username :");
                     String username = scanner.nextLine();
                     System.out.println("Enter password :");
                     String password = scanner.nextLine();
@@ -159,9 +157,20 @@ public class ConsoleMenu {
                         }
                         break;
                     }
-                case "3":
-                    System.out.println("Transfer logic (Phase 3)");
+                case "3":{
+                    System.out.println("Enter Receiver Username :");
+                    try{
+                        String receiverUsername = scanner.nextLine();
+                        System.out.println("Enter amount to Transfer");
+                        Double amount = Double.parseDouble(scanner.nextLine());
+                        bankingService.tansfer(account, receiverUsername, amount);
+                        System.out.println("Amount Sucessfully Transfered");
+                    }catch(Exception e){
+                        System.out.println("Transfer Unsucessful");
+                        e.printStackTrace();
+                    }
                     break;
+                }                 
                 case "4":
                     loggedIn = false;
                     break;

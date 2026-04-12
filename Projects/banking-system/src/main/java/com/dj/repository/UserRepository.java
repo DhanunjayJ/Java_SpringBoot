@@ -29,6 +29,7 @@ public class UserRepository {
     }
 
     public User login(String username,String password){
+
         String sql = "SELECT * FROM USERS WHERE username = ?";
 
         Connection conn = DBConnection.getConnection();
@@ -53,5 +54,25 @@ public class UserRepository {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public User getUserByUsername(String username){
+        String sql = "SELECT * FROM users WHERE username = ?";
+
+        Connection conn = DBConnection.getConnection();
+
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setString(1,username);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next()){
+                return new User(rs.getInt("id"),rs.getString("username"),rs.getString("password"));
+            }else{
+                System.out.println("User not present");
+                return null;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }
