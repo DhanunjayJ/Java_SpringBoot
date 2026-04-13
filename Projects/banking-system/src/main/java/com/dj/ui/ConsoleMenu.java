@@ -1,17 +1,21 @@
 package com.dj.ui;
+import java.util.List;
 import java.util.Scanner;
 
 import com.dj.exception.InsufficientFundsException;
 import com.dj.model.BankAccount;
 import com.dj.model.CurrentAccount;
 import com.dj.model.SavingsAccount;
+import com.dj.model.Transaction;
 import com.dj.model.User;
 import com.dj.service.BankingService;
+import com.dj.service.TransactionService;
 
 public class ConsoleMenu {
     private Scanner scanner;
 
     BankingService bankingService = new BankingService();
+    TransactionService transService = new TransactionService();
 
     public ConsoleMenu(){
         this.scanner = new Scanner(System.in);
@@ -108,7 +112,8 @@ public class ConsoleMenu {
             System.out.println("1. Deposit");
             System.out.println("2. Withdraw");
             System.out.println("3. Transfer");
-            System.out.println("4. Logout");
+            System.out.println("4. Tranaction History");
+            System.out.println("5. Logout");
             System.out.print("Choice: ");
 
             String choice = scanner.nextLine();
@@ -170,8 +175,42 @@ public class ConsoleMenu {
                         e.printStackTrace();
                     }
                     break;
-                }                 
-                case "4":
+                }
+                case "4" :
+                    {
+                        System.out.println("Enter What Type of Tranactions you want to Retrive");
+                        System.out.println("1. All");
+                        System.out.println("2. All Deposits");
+                        System.out.println("3. All Withdraw");
+                        System.out.println("4. Transfer Out");
+                        System.out.println("5. Tranfer IN");
+
+                        String input = scanner.nextLine();
+                        String type;
+                        
+                        if(input.equals("1")){
+                            type = "ALL";
+                        }else if(input.equals("2")){
+                            type = "DEPOSIT";
+                        }else if(input.equals("3")){
+                            type = "WITHDRAWAL";
+                        }else if(input.equals("4")){
+                            type = "TRANSFER_OUT";
+                        }else{
+                            type = "TRANSFER_IN";
+                        }
+
+                        List<Transaction> history = transService.getFilteredHistory(account.getId(), type);
+
+                        if(history.isEmpty()){
+                            System.out.println("No Transactoin Found");
+                        }else{
+                            history.forEach(System.out::println);
+                            System.out.println("Total Volume:"+ transService.calculateTotalVolume(account.getId(),type));
+                        }
+                        break;
+                    }                 
+                case "5":
                     loggedIn = false;
                     break;
                 }

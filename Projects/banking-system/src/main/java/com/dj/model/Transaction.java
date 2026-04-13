@@ -16,6 +16,15 @@ public class Transaction {
         this.type = type;
     }
 
+    // the constructor for fetchings
+    public Transaction(int id, int accountId, double amount, String type, Timestamp timestamp) {
+        this.id = id;
+        this.accountId = accountId;
+        this.amount = amount;
+        this.type = type;
+        this.timestamp = timestamp;
+    }
+
     public int getId() {
         return id;
     }
@@ -34,6 +43,11 @@ public class Transaction {
 
     public Timestamp getTimestamp() {
         return timestamp;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[%s] %-12s: $%.2f | ID: %d", timestamp, type, amount, id);
     }
     
 }

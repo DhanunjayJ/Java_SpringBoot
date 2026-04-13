@@ -127,7 +127,7 @@ public class BankingService {
             double newReceiverBalance = receiverAccount.getBalance()+amount;
             accountRepo.updateBalance(receiverAccount.getId(), newReceiverBalance, conn);
 
-            transRepo.logTransaction(new Transaction(receiverAccount.getId(), amount, "TRANSFTER_IN"),conn);
+            transRepo.logTransaction(new Transaction(receiverAccount.getId(), amount, "TRANSFER_IN"),conn);
             conn.commit();
             senderAccount.setBalance(newSenderBalance);
             System.out.println("Transfer Successful!!");
