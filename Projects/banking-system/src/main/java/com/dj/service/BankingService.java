@@ -11,6 +11,7 @@ import com.dj.repository.AccountRepository;
 import com.dj.repository.TransactionRepository;
 import com.dj.repository.UserRepository;
 import com.dj.util.DBConnection;
+import com.dj.util.PasswordHasher;
 
 public class BankingService {
     private UserRepository userRepository = new UserRepository();
@@ -18,14 +19,14 @@ public class BankingService {
     private TransactionRepository transRepo = new TransactionRepository();
 
     public boolean registerUser(String username,String password){
-        User user = new User(username,password);
-        boolean isRegistered = userRepository.register(user);
-        return isRegistered;
+        String hashedPassword = PasswordHasher.hashPassword(password);
+        User user = new User(username,hashedPassword);
+        return userRepository.register(user);
     }
 
     public User login(String username,String password){
-        User user = userRepository.login(username, password);
-        return user;
+        String hashedPassword = PasswordHasher.hashPassword(password);
+        return userRepository.login(username, hashedPassword);
     }
 
     public BankAccount getAccountByUserId(int id){
