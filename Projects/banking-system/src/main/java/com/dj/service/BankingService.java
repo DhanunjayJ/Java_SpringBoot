@@ -2,6 +2,7 @@ package com.dj.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.dj.exception.InsufficientFundsException;
 import com.dj.model.BankAccount;
@@ -138,5 +139,20 @@ public class BankingService {
         }finally{
             conn.setAutoCommit(true);
         }
+    }
+
+    public void printAdminReport() {
+        List<BankAccount> allAccounts = accountRepo.getAllAccounts();
+
+        double totalLiquidity = allAccounts.parallelStream()
+        .mapToDouble(BankAccount::getBalance)
+        .sum();
+
+        System.out.println("\n========== ADMIN DASHBOARD ==========");
+        System.out.println("Total Registered Accounts: " + allAccounts.size());
+        System.out.println("Total Bank Liquidity: $" + String.format("%.2f", totalLiquidity));
+        System.out.println("Status: System healthy (Parallel Processing Active)");
+        System.out.println("=====================================");
+        
     }
 }

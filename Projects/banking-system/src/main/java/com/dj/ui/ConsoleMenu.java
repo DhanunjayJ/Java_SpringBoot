@@ -30,6 +30,7 @@ public class ConsoleMenu {
             System.out.println("\n1. Register");
             System.out.println("2. Login");
             System.out.println("3. Exit");
+            System.out.println("99. Admin View (Bank Total)");
             System.out.println("Choose an option: ");
 
             String choice = scanner.nextLine();
@@ -65,6 +66,9 @@ public class ConsoleMenu {
                 case "3":
                     System.out.println("Thank you for using DJ Bank. Goodbye!");
                     running = false;
+                    break;
+                case "99" :
+                    bankingService.printAdminReport();
                     break;
                 default:
                     System.out.println("Invalid option. Please try again.");

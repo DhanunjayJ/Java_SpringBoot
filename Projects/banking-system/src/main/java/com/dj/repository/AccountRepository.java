@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.dj.model.BankAccount;
 import com.dj.model.SavingsAccount;
@@ -54,5 +56,30 @@ public class AccountRepository {
             pstmt.setInt(2,accountId);
             return pstmt.executeUpdate() > 0;
         }
+    }
+
+    public List<BankAccount> getAllAccounts(){
+        List<BankAccount> accounts = new ArrayList<>();
+        String sql = "SELECT * FROM accounts";
+        Connection conn = DBConnection.getConnection();
+
+        try(PreparedStatement pstmt = conn.prepareStatement(sql)){
+            ResultSet rs = pstmt.executeQuery();
+            while(rs.next()){
+                String type = rs.getString("account_type");
+                int id = rs.getInt("id");
+                int userId = rs.getInt("user_id");
+                double balance = rs.getDouble("balance");
+
+                if("SAVINGS".equalsIgnoreCase(type)){
+                    accounts.add(new SavingsAccount(id, userId, balance));
+                }else{
+                    accounts.add(new CurrentAccount(id,userId, balance));
+                }
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return accounts;
     }
 }

@@ -1,7 +1,5 @@
 package com.dj;
 
-import javax.management.Notification;
-
 import com.dj.thread.NotificationThread;
 import com.dj.ui.ConsoleMenu;
 import com.dj.util.DBConnection;
