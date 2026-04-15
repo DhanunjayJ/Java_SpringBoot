@@ -57,4 +57,27 @@ public class TransactionRepository {
     return transactions;
   } 
 
+  public List<Transaction> getAllTransaction(){
+
+    List<Transaction> transactions = new ArrayList<>();
+    String sql = "SELECT * FROME transactions";
+    Connection conn = DBConnection.getConnection();
+
+    try(PreparedStatement pstmt = conn.PreparedStatement(sql)){
+      ResultSet rs = pstmt.executeQuery();
+      while(rs.next()){
+        transactions.add(new Transaction(
+          rs.getInt("id"),
+          rs.getInt("account_id");
+          rs.getDouble("amount");
+          rs.getString("type");
+          rs.getTimestamp("timestamp");
+        ));
+      }
+    } catch(SQLException e){
+      e.printStackTrace();
+    }
+    
+    return transactions;
+  }
 }
