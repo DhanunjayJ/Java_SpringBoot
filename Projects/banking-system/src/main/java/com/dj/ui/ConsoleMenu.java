@@ -1,4 +1,5 @@
 package com.dj.ui;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,6 +10,7 @@ import com.dj.model.SavingsAccount;
 import com.dj.model.Transaction;
 import com.dj.model.User;
 import com.dj.service.BankingService;
+import com.dj.service.FileExportService;
 import com.dj.service.TransactionService;
 
 public class ConsoleMenu {
@@ -200,7 +202,7 @@ public class ConsoleMenu {
                             type = "WITHDRAWAL";
                         }else if(input.equals("4")){
                             type = "TRANSFER_OUT";
-                        }else{
+                        }else {
                             type = "TRANSFER_IN";
                         }
 
@@ -211,6 +213,19 @@ public class ConsoleMenu {
                         }else{
                             history.forEach(System.out::println);
                             System.out.println("Total Volume:"+ transService.calculateTotalVolume(account.getId(),type));
+
+                            System.out.println("\n Would you like to download this statment as a file? (Y/N)");
+                            String downloadChoice = scanner.nextLine();
+
+                            if(downloadChoice.equalsIgnoreCase("Y")){
+                                FileExportService exportService = new FileExportService();
+                                try {
+                                    String file = exportService.exportTrasactions(user.getUsername(), history);
+                                    System.out.println("✅ Sucess! Your statement has been saved as: "+file);
+                                }catch (IOException e){
+                                    System.err.println("❌ Failed to export file : "+e.getMessage());
+                                }
+                            }
                         }
                         break;
                     }                 
