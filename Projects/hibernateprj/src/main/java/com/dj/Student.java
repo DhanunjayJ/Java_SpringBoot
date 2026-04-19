@@ -1,7 +1,11 @@
 package com.dj;
 
-public class Student {
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
+@Entity
+public class Student {
+    @Id
     private int rollNo;
     private String sName;
     private int sAge;
@@ -24,5 +28,10 @@ public class Student {
     public void setsAge(int sAge) {
         this.sAge = sAge;
     }
-    
+
+    @Override
+public String toString() {
+    return "Student [rollNo=" + rollNo + ", sName=" + sName + ", sAge=" + sAge + "]";
+}
+
 }
