@@ -2,7 +2,6 @@ package com.dj;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
 public class App 
@@ -15,23 +14,20 @@ public class App
         s1.setsAge(24);
         s1.setRollNo(24);
 
-        // Configuration cfg = new Configuration();
-        // cfg.addAnnotatedClass(com.dj.Student.class);
-        // cfg.configure(); 
+        //fetching
+        Student s2 = null;
 
 
         SessionFactory sf = new Configuration().addAnnotatedClass(com.dj.Student.class)
         .configure()
         .buildSessionFactory();
+
         Session session = sf.openSession();
 
-        Transaction transaction = session.beginTransaction();
+        s2 = session.find(Student.class,21);
 
-        session.persist(s1);
-
-        transaction.commit();
         session.close();
 
-        System.out.println(s1);
+        System.out.println(s2);
     }
 }
