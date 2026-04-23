@@ -11,16 +11,18 @@ public class App
     {
 
         Laptop l1 = new Laptop();
+        l1.setLid(1);
         l1.setBrand("apple");
         l1.setModel("M2");
         l1.setRam("16");
 
         Alien a1 = new Alien();
-        a1.setAid(102);
+        a1.setAid(101);
         a1.setAname("dhanunjay");
         a1.setTech("Java");
         a1.setLaptop(l1);
         SessionFactory sf = new Configuration().addAnnotatedClass(com.dj.Alien.class)
+        .addAnnotatedClass(com.dj.Laptop.class)
         .configure()
         .buildSessionFactory();
 
@@ -28,14 +30,15 @@ public class App
        
         Transaction transaction = session.beginTransaction();
 
+        session.persist(l1);
         session.persist(a1);
-
+        
         transaction.commit();
 
         Alien a2 = session.find(Alien.class,102);
 
         System.out.println(a2);
-        
+
         session.close();
      
     }

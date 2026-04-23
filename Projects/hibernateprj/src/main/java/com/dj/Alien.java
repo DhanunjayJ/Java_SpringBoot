@@ -2,6 +2,7 @@ package com.dj;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 
 
 @Entity
@@ -11,6 +12,7 @@ public class Alien {
     private int aid;
     private String aname;
     private String tech;
+    @OneToOne
     private Laptop laptop;
 
     public int getAid() {
@@ -37,7 +39,7 @@ public class Alien {
     public void setTech(String tech) {
         this.tech = tech;
     }
-    
+
     @Override
     public String toString() {
         return "Alien [aid=" + aid + ", aname=" + aname + ", tech=" + tech + ", laptop=" + laptop + "]";
