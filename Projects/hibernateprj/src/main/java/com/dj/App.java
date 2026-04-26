@@ -18,17 +18,10 @@ public class App
         .buildSessionFactory();
 
         Session session = sf.openSession();
-        //sql select * from laptop where ram=32 -> SQL
-        //usig hql to get the laptop by ram.
-        String brand = "asus";
-        // Query<Laptop> query = session.createQuery("from Laptop where ram=32",Laptop.class);
-        // Query<Laptop> query = session.createQuery("from Laptop where brand name lie ?1 ",Laptop.class);
-        // Query<Laptop> query = session.createQuery("select model from Laptop where brand name lie ?1 ",Laptop.class);
-        Query<Laptop> query = session.createQuery("select brand,model from Laptop where brand name lie ?1 ",Laptop.class);
-        query.setParameter(1, brand);
-        List<Laptop> laptops = query.getResultList();
-
-        System.out.println(laptops);
+        //for lazy loading. it won't execute the queury.
+        //untill you will print in the or needed. 
+        Laptop laptop = session.getReference(Laptop.class).getReference(2);
+        System.out.println(laptop);
 
         session.close();
     }
