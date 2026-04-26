@@ -1,8 +1,10 @@
 package com.dj;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.OneToMany;
 
 
 @Entity
@@ -12,8 +14,11 @@ public class Alien {
     private int aid;
     private String aname;
     private String tech;
-    @OneToOne
-    private Laptop laptop;
+    //without mapped by it will create a new table
+    //to handle the mapping. so to let the laptop handle it
+    //we are saying it is mapped by laptop by usig a variable "alien"
+    @OneToMany(mappedBy = "alien")
+    private List<Laptop> laptops;
 
     public int getAid() {
         return aid;
@@ -21,12 +26,7 @@ public class Alien {
     public void setAid(int aid) {
         this.aid = aid;
     }
-    public Laptop getLaptop() {
-        return laptop;
-    }
-    public void setLaptop(Laptop laptop) {
-        this.laptop = laptop;
-    }
+   
     public String getAname() {
         return aname;
     }
@@ -42,7 +42,14 @@ public class Alien {
 
     @Override
     public String toString() {
-        return "Alien [aid=" + aid + ", aname=" + aname + ", tech=" + tech + ", laptop=" + laptop + "]";
+        return "Alien [aid=" + aid + ", aname=" + aname + ", tech=" + tech + ", laptop=" + laptops + "]";
+    }
+
+    public List<Laptop> getLaptops() {
+        return laptops;
+    }
+    public void setLaptops(List<Laptop> laptops) {
+        this.laptops = laptops;
     }
 
     
