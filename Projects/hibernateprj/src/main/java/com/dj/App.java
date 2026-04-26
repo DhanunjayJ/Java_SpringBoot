@@ -41,19 +41,11 @@ public class App
         a2.setAname("dj");
         a2.setTech("python");
 
-        Alien a3 = new Alien();
-        a3.setAid(103);
-        a3.setAname("dhanunjay");
-        a3.setTech("ai");
-
 
         a1.setLaptops(Arrays.asList(l1,l2));
-        a2.setLaptops(Arrays.asList(l1,l3));
-        a3.setLaptops(Arrays.asList(l1));
+        a2.setLaptops(Arrays.asList(l3));
 
-        l1.setAliens(Arrays.asList(a1,a2));
-        l2.setAliens(Arrays.asList(a1,a2,a3));
-        l3.setAliens(Arrays.asList(a2,a3));
+
 
         SessionFactory sf = new Configuration().addAnnotatedClass(com.dj.Alien.class)
         .addAnnotatedClass(com.dj.Laptop.class)
@@ -68,14 +60,17 @@ public class App
         session.persist(l2);
         session.persist(l3);
         session.persist(a2);
-        session.persist(a3);
         session.persist(a1);
         
         transaction.commit();
 
-        System.out.println(a1);
-
         session.close();
-     
+
+        Session session1 = sf.openSession();
+        Alien a5 = session1.find(Alien.class,101);
+        //if you ask it will fetch the data of the laptop. if not it won't fetch. 
+        //by default it is lazy.
+        // System.out.println(a5);
+        session1.close();
     }
 }

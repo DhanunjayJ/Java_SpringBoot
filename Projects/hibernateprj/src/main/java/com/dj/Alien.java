@@ -3,8 +3,9 @@ package com.dj;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 
 
 @Entity
@@ -14,9 +15,9 @@ public class Alien {
     private int aid;
     private String aname;
     private String tech;
-    //without this both will create two tables we jsut need one
-    //same as before like one to many
-    @ManyToMany
+    //by making the fetch type eager you will get the data
+    //of the laptops even if you don't need it. 
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Laptop> laptops;
 
     public int getAid() {

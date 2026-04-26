@@ -1,10 +1,10 @@
 package com.dj;
 
-import java.util.List;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+
 
 
 @Entity
@@ -15,8 +15,6 @@ public class Laptop {
     private String brand;
     private String model;
     private String ram;
-    @ManyToMany(mappedBy = "laptops")
-    private List<Alien> aliens;
 
     public String getBrand() {
         return brand;
@@ -47,13 +45,6 @@ public class Laptop {
     @Override
     public String toString() {
         return "Laptop [lid=" + lid + ", brand=" + brand + ", model=" + model + ", ram=" + ram + "]";
-    }
-
-    public List<Alien> getAliens() {
-        return aliens;
-    }
-    public void setAliens(List<Alien> aliens) {
-        this.aliens = aliens;
     }
    
 }
