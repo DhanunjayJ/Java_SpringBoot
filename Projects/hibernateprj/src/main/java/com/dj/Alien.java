@@ -4,7 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 
 
 @Entity
@@ -14,10 +14,9 @@ public class Alien {
     private int aid;
     private String aname;
     private String tech;
-    //without mapped by it will create a new table
-    //to handle the mapping. so to let the laptop handle it
-    //we are saying it is mapped by laptop by usig a variable "alien"
-    @OneToMany(mappedBy = "alien")
+    //without this both will create two tables we jsut need one
+    //same as before like one to many
+    @ManyToMany
     private List<Laptop> laptops;
 
     public int getAid() {
