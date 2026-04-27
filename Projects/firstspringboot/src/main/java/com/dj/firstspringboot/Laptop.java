@@ -3,14 +3,13 @@ package com.dj.firstspringboot;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component 
-public class Alien {
-
+@Component
+public class Laptop {
     @Autowired
-    Laptop laptop;
+    CPU cpu;
 
-    public void code (){
-        System.out.println("Alien is using the laptop");
-        laptop.compile();
+    public void compile(){
+        cpu.use();
+        System.out.println("Compiling");
     }
 }
