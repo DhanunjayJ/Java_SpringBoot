@@ -18,11 +18,24 @@ public class App
         .buildSessionFactory();
 
         Session session = sf.openSession();
-        //for lazy loading. it won't execute the queury.
-        //untill you will print in the or needed. 
-        Laptop laptop = session.getReference(Laptop.class).getReference(2);
-        System.out.println(laptop);
+
+        Laptop l1 = session.find(Laptop.class, 1);
+        System.out.println(l1);
+
+        //it will execute the query once because of the l1 cache in the session.
+        // Laptop l2 = session.find(Laptop.class, 1);
+        // System.out.println(l2);
 
         session.close();
+
+        // here it wil execute the same query twice because there is not cache for the two 
+        //sessions combined!!
+        Session session2 = sf.openSession();
+        Laptop l2 = session2.find(Laptop.class,1);
+        System.out.println(l2);
+
+        session2.close();
+        sf.close();
+        
     }
 }

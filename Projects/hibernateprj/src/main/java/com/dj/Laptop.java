@@ -2,12 +2,15 @@ package com.dj;
 
 
 
+import jakarta.persistence.Cacheable;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 
 
 @Entity
+//to say we are uisng ehcahe using level 2 cache. 
+@Cacheable
 public class Laptop {
 
     @Id
