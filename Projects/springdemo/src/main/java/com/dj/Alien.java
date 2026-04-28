@@ -3,36 +3,35 @@ package com.dj;
 public class Alien {
 
     private int age;
-    private Laptop lap;
+    private Computer com;
 
     public int getAge() {
         return age;
     }
+
+    public Alien(){
+        
+    }
    
-    public Alien(int age, Laptop lap) {
+    public Alien(int age, Computer com) {
         this.age = age;
-        this.lap = lap;
+        this.com = com;
     }
 
     public void setAge(int age) {
-        System.out.println("Spring is setting the values using setter");
         this.age = age;
-    }
-
-    public Alien(){
-        System.out.println("Alien Object Created");
     }
 
     public void code (){
         System.out.println("Coding");
-        lap.compile();
+        com.compile();
     }
 
-    public Laptop getLap() {
-        return lap;
+    public Computer getCom() {
+        return com;
     }
 
-    public void setLap(Laptop lap) {
-        this.lap = lap;
+    public void setCom(Computer com) {
+        this.com = com;
     }
 }
