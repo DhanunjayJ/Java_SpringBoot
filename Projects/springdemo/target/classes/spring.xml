@@ -8,11 +8,28 @@
 the bean, it will not just create one!! -->
 <!-- <bean id="alien" class="com.dj.Alien" scope="prototype"> </bean> -->
 
-<bean id="alien" class="com.dj.Alien"> 
-<!-- Setter injection -->
-    <property name="age" value="21"></property>
+<bean id="alien" class="com.dj.Alien">
+    <!-- <property name="age" value="21"></property> -->
+    <!-- <constructor-arg value = "21"/>  -->
+
+    <!-- args for two parameterized constructor 
+    the sequence matters here. if you don't mention the type
+    -->
+    <!-- <constructor-arg type= "com.dj.Laptop" ref="lap1"/>
+    <constructor-arg type= "int" value="21"/> -->
+
+    <!-- index matters works  this is better -->
+    <constructor-arg index="1" ref="lap1"/>
+    <constructor-arg index="0" value="21"/>
+
+    <!-- Here the sequence matters -->
+    <!-- To this to work witout sequence you need to use
+    constructor properties annotation on the constructor -->
+    <!-- <constructor-arg name= "lap" ref="lap1"/>
+    <constructor-arg name= "age" value="21"/> -->
+
 <!-- Ref Attribute setter injection refring the laptop object here-->
-    <property name="lap" ref="lap1"></property>
+    <property name="lap" ref="lap1"/>
 </bean>
 
 <bean id="lap1" class="com.dj.Laptop"> </bean>
