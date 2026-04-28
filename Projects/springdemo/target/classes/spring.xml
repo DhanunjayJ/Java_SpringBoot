@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- Object will be created as many times you mention the 
+the bean, it will not just create one!! -->
+<!-- <bean id="alien1" class="com.dj.Alien"> </bean> -->
+
+<bean id="alien" class="com.dj.Alien" scope="prototype"> </bean>
+<bean id="lap" class="com.dj.Laptop"> </bean>
+
+</beans>
