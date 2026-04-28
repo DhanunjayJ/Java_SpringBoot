@@ -6,9 +6,15 @@
 
 <!-- Object will be created as many times you mention the 
 the bean, it will not just create one!! -->
-<!-- <bean id="alien1" class="com.dj.Alien"> </bean> -->
+<!-- <bean id="alien" class="com.dj.Alien" scope="prototype"> </bean> -->
 
-<bean id="alien" class="com.dj.Alien" scope="prototype"> </bean>
-<bean id="lap" class="com.dj.Laptop"> </bean>
+<bean id="alien" class="com.dj.Alien"> 
+<!-- Setter injection -->
+    <property name="age" value="21"></property>
+<!-- Ref Attribute setter injection refring the laptop object here-->
+    <property name="lap" ref="lap1"></property>
+</bean>
+
+<bean id="lap1" class="com.dj.Laptop"> </bean>
 
 </beans>
