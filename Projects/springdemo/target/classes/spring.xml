@@ -15,32 +15,24 @@ same name as property in the beans and AUTO WIRES!!-->
 <!-- Another autowiring ByType -->
 <bean id="alien" class="com.dj.Alien" autowire="byType">
     <property name="age" value="21"></property>
-    <!-- this property is being used even though autowire is there -->
-    <property name="com" ref="com1"/>
-    <!-- <constructor-arg value = "21"/>  -->
+    <!-- <property name="com1" ref="com1"/> -->
+    <!-- the whole purpose of the com1 bean is for this bean to intize when it 
+    initialize so we can define a inner bean here -->
 
-    <!-- args for two parameterized constructor 
-    the sequence matters here. if you don't mention the type
-    -->
-    <!-- <constructor-arg type= "com.dj.Laptop" ref="lap1"/>
-    <constructor-arg type= "int" value="21"/> -->
-
-    <!-- index matters works  this is better
-    <constructor-arg index="1" ref="lap1"/>
-    <constructor-arg index="0" value="21"/> -->
-
-    <!-- Here the sequence matters -->
-    <!-- To this to work witout sequence you need to use
-    constructor properties annotation on the constructor -->
-    <!-- <constructor-arg name= "lap" ref="lap1"/>
-    <constructor-arg name= "age" value="21"/> -->
-
-<!-- Ref Attribute setter injection refring the laptop object here-->
+    <property name="com1">
+    
+    </property>
 </bean>
-<!-- Using by type will cause error if multiple beans are of same type , to 
-resolve this error. we need to have a primary field. so that it will go with primary 
-bean no error-->
+
 <bean id="com1" class="com.dj.Laptop" primary="true"> </bean>
-<bean id="com" class="com.dj.Desktop"> </bean>
+
+<!-- lazy init creates object only when needed when you use it. 
+which is when you get bean. 
+ instead of creating all the singleton objects at once. -->
+ <!-- When you have the lazy bean in a eager bean some where it is used but not 
+ lazy then also this bean is being created. when a non lazy bean depeneded on 
+ a lazy bean it stil creates the object during context creation.-->
+
+<!-- <bean class="com.dj.Desktop" lazy-init="true"> </bean> -->
 
 </beans>
