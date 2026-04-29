@@ -1,4 +1,4 @@
-package com.dj.firstspringboot;
+package com.dj.firstspringboot.Model;
 
 import org.springframework.stereotype.Component;
 
