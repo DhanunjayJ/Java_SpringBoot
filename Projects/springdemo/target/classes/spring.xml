@@ -18,9 +18,8 @@ same name as property in the beans and AUTO WIRES!!-->
     <!-- <property name="com1" ref="com1"/> -->
     <!-- the whole purpose of the com1 bean is for this bean to intize when it 
     initialize so we can define a inner bean here -->
-
     <property name="com1">
-    
+        <bean id="com1" class="com.dj.Laptop" primary="true"> </bean>
     </property>
 </bean>
 
