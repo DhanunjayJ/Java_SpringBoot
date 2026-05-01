@@ -5,11 +5,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import com.dj.springjdbcdemo.Model.Student;
+import com.dj.springjdbcdemo.Model.StudentDAO;
 import com.dj.springjdbcdemo.repository.StudentRepo;
 
 @Service
 public class StudentService {
-    
+
     @Autowired
     private StudentRepo repository;
     
@@ -22,7 +23,7 @@ public class StudentService {
         this.repository = repository;
     }
 
-    public void addStudent(Student s) {
+    public void addStudent(StudentDAO s) {
         repository.save(s);
     }
 
