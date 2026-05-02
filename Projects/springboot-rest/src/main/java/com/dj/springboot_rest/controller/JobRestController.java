@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+// import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
@@ -36,7 +38,7 @@ public class JobRestController {
     }
 
     //to make it only consume xml
-    @GetMapping(path="jobPost/{postId}", consumes = {"application/xml"})
+    @GetMapping(path="jobPost/{postId}")
     public JobPost getJob(@PathVariable("postId") int postId){
         return service.getJob(postId);
     }
@@ -57,5 +59,17 @@ public class JobRestController {
     public String deleteJob(@PathVariable("postId") int postId){
         service.deleteJob(postId);
         return "Deleted";
+    }
+
+   
+    @GetMapping("jobPosts/keyword/{keyword}")
+    public List<JobPost> searchByKeyword(@PathVariable("keyword") String keyword){
+        return service.search(keyword);
+    }
+
+    @GetMapping("load")
+    public String loadData(){
+        service.load();
+        return "saved";
     }
 }
