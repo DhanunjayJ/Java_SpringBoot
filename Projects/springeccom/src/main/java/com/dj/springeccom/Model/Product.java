@@ -5,7 +5,7 @@ import java.sql.Date;
 
 import org.springframework.stereotype.Component;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+// import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,7 +31,7 @@ public class Product {
     private String brand;
     private BigDecimal price;
     private String category;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-YYYY")
+    // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-YYYY")
     private Date releaseDate;
     private boolean productAvailable;
     private Integer stockQuantity;

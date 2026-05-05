@@ -22,7 +22,7 @@ public class ProductService {
        return repository.findAll();
     }
 
-    public Product addProduct(Product product,MultipartFile image) throws IOException{
+    public Product addOrUpdateProduct(Product product,MultipartFile image) throws IOException{
         
         product.setImageName(image.getOriginalFilename());
         product.setImageType(image.getContentType());
@@ -33,5 +33,9 @@ public class ProductService {
 
     public Optional<Product> getProductById(int productId){
         return repository.findById(productId);
+    }
+    
+    public void deleteProduct(int id){
+        repository.deleteById(id);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dj.springeccom.Model.Product;
 import com.dj.springeccom.Service.ProductService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "https://special-sniffle-q7wjwgg9pw4rf99wj-5173.app.github.dev/")
+@CrossOrigin(origins = "https://solid-pancake-q7wjwgg94vrvhx69-5173.app.github.dev/")
 public class ProductController {
     
     @Autowired
@@ -47,7 +49,7 @@ public class ProductController {
     public ResponseEntity<?> addProduct(@RequestPart Product product,@RequestPart MultipartFile imageFile) {
     Product savedProduct = null;
         try{
-        savedProduct = service.addProduct(product,imageFile);
+        savedProduct = service.addOrUpdateProduct(product,imageFile);
         return new ResponseEntity<>(savedProduct,HttpStatus.CREATED);
       } catch (IOException e){
         return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
@@ -59,6 +61,27 @@ public class ProductController {
     return service.getProductById(id)
             .map(ResponseEntity::ok)
             .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+    }
+
+    @PutMapping("/product/{id}")
+    public ResponseEntity<String> updateProdcut(@PathVariable int id, @RequestPart Product product,@RequestPart MultipartFile imageFile){
+      Product updatedProduct = null;
+      try{
+        updatedProduct = service.addOrUpdateProduct(product,imageFile);
+        return new ResponseEntity<>("Updated",HttpStatus.OK);
+      }catch(IOException e){
+        return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+      }
+    }
+
+    @DeleteMapping("/product/{id}")
+    public ResponseEntity<String> deleteProduct(@PathVariable int id){
+      Optional<Product> product = service.getProductById(id);
+      if(product.isPresent()){
+        service.deleteProduct(id);
+        return new ResponseEntity<>("Deleted",HttpStatus.OK);
+      }
+      return new ResponseEntity<>("Product Not Found",HttpStatus.NOT_FOUND);
     }
 
 
