@@ -34,8 +34,12 @@ public class ProductService {
     public Optional<Product> getProductById(int productId){
         return repository.findById(productId);
     }
-    
+
     public void deleteProduct(int id){
         repository.deleteById(id);
+    }
+
+    public List<Product> searchProducts(String keyword){
+        return repository.searchProducts(keyword);
     }
 }

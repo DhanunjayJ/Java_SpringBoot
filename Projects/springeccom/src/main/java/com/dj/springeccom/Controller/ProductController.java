@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "https://solid-pancake-q7wjwgg94vrvhx69-5173.app.github.dev/")
+@CrossOrigin(origins = "https://curly-capybara-wrwpwjj95vj6254rr-5173.app.github.dev/")
 public class ProductController {
     
     @Autowired
@@ -84,5 +85,11 @@ public class ProductController {
       return new ResponseEntity<>("Product Not Found",HttpStatus.NOT_FOUND);
     }
 
+  @GetMapping("/products/search")
+  public ResponseEntity<List<Product>> searchProducts(@RequestParam String keyword){
+    List<Product> products = service.searchProducts(keyword);
+    System.out.println("Searching for "+keyword);
+    return new ResponseEntity<>(products,HttpStatus.OK);
+  }
 
 }
