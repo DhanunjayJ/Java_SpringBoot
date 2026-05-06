@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "https://curly-capybara-wrwpwjj95vj6254rr-5173.app.github.dev/")
+@CrossOrigin(origins = "https://laughing-funicular-5gwjwpp4rgj724r5r-5173.app.github.dev/")
 public class ProductController {
     
     @Autowired
