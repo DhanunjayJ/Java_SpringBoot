@@ -66,6 +66,7 @@ public class JobService {
 	}
 
     public JobPost getJob(int postId){
+        // int num = 10/0;
         return repo.findById(postId).orElse(new JobPost());
     }
 
