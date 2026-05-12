@@ -1,4 +1,4 @@
-package com.dj.spring_security_demo;
+package com.dj.spring_security_demo.model;
 
 import org.springframework.stereotype.Component;
 
