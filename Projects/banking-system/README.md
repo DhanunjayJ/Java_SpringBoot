@@ -1,9 +1,3 @@
-This is a fantastic repository to showcase on your profile. Since the project is hosted within a subfolder of a larger Java/Spring Boot repository, the `README.md` needs to be very clear about what *this* specific project demonstrates.
-
-Here is a professionally structured `README.md` you can copy and paste into your `banking-system` folder. It is designed to catch the eye of a technical recruiter or a hiring manager.
-
-***
-
 # 🏦 DJ Bank: High-Performance CLI Banking Engine
 
 A robust, enterprise-grade Console Banking Application built with **Java 17**, focusing on **multithreading**, **data security**, and **high-performance data processing**. This project demonstrates the transition from a simple CRUD application to a scalable system using modern Java design patterns.
